@@ -1,0 +1,16 @@
+{
+    "name":"aoepeople/aoe_sessionvars",
+    "type":"magento-module",
+    "license":"OSL-3.0",
+    "homepage":"https://github.com/AOEpeople/Aoe_SessionVars",
+    "description":"Capture variables coming in from outside",
+    "authors":[
+        {
+            "name":"Manish Jain",
+            "email":"manish.sh.jain@gmail.com"
+        }
+    ],
+    "require":{
+        "magento-hackathon/magento-composer-installer":"*"
+    }
+}

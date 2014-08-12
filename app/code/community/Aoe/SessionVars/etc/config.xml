@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Aoe_SessionVars>
+            <version>0.1.0</version>
+        </Aoe_SessionVars>
+    </modules>
+    <global>
+        <models>
+            <aoe_sessionvars>
+                <class>Aoe_SessionVars_Model</class>
+            </aoe_sessionvars>
+            <widget>
+                <rewrite>
+                    <template_filter>Aoe_SessionVars_Model_Template_Filter</template_filter>
+                </rewrite>
+            </widget>
+        </models>
+    </global>
+    <frontend>
+        <events>
+            <controller_front_send_response_before>
+                <observers>
+                    <capture_coupon>
+                        <class>aoe_sessionvars/observer</class>
+                        <method>setSessionVars</method>
+                        <type>singleton</type>
+                    </capture_coupon>
+                </observers>
+            </controller_front_send_response_before>
+        </events>
+        <aoe_sessionvars>
+            <vars>
+                <var1><!-- this is the internal name of the variable that's used to store/access the value from the core/customer/checkout session -->
+                    <getParameterName /><!-- if empty this parameter can't be captured by url -->
+                    <cookieName /><!-- if empty this parameter can't be captured by cookie -->
+                    <validate />
+                    <scope /><!-- if empty core will be used -->
+                </var1>
+                <lang>
+                    <getParameterName>lang</getParameterName>
+                    <cookieName />
+                    <validate />
+                    <scope />
+                </lang>
+            </vars>
+        </aoe_sessionvars>
+    </frontend>
+</config>
