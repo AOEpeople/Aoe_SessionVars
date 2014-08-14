@@ -37,12 +37,6 @@
                     <validate />
                     <scope /><!-- if empty core will be used -->
                 </var1>
-                <lang>
-                    <getParameterName>lang</getParameterName>
-                    <cookieName />
-                    <validate />
-                    <scope />
-                </lang>
             </vars>
         </aoe_sessionvars>
     </frontend>
