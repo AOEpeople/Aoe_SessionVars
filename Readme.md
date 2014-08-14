@@ -5,14 +5,6 @@
 The purpose of this module is to provide a generic way to "capture" variables coming in from outside (via url parameter or cookie) and store them in the specified session, so it can be consumed by other modules from there
 Author: Manish Jain
 
-## Installation
-
-Please remember using the `--recursive` parameter while cloning:
-
-    git clone --recursive https://github.com/AOEpeople/Aoe_SessionVars.git Aoe_SessionVars
-
-The module comes with a modman configuration file.
-
 ## Usage
 
 On every page hit incoming variable should be evaluated and validated against the regex pattern. Then stored in the session. If a value already exist in the session and a new value is being provided then the new one should overwrite the existing one.
@@ -20,6 +12,7 @@ On every page hit incoming variable should be evaluated and validated against th
 ## How it works
 
 Add the variables in your module's config.xml which needs to be set in session
+```xml
 <frontend>
 	<aoe_sessionvars>
 		<vars>
@@ -28,12 +21,15 @@ Add the variables in your module's config.xml which needs to be set in session
 				<cookieName /><!-- if empty this parameter can't be captured by cookie -->
 				<validate /> <!-- Regular expression to validate the value of parameter -->
 				<scope /><!-- if empty core will be used -->
+				<defaultValue /><!-- fallback if parameter wasn't captured before -->
 			</var1>
 		</vars>
 	</aoe_sessionvars>
 </frontend>
+```
 
 Example:
+```xml
 <frontend>
 	<aoe_sessionvars>
 		<vars>
@@ -46,6 +42,7 @@ Example:
 		</vars>
 	</aoe_sessionvars>
 </frontend>
+```
 
 In above example, If URL contains the parameter as 'cp' or 'MAGENTO_CP' cookie is set, value of 'cp' or 'MAGENTO_CP' will be set in specified session (scope).
 
@@ -54,15 +51,27 @@ template filters).
 
 Example:
 
-Click <a href="http://www.domain.com/?lang={{sessionVar code=lang}}">here</a>
+Incoming request: http://www.example.com/?lang=en-ca&country=ca
 
+CMS content: Click <a href="http://www.domain.com/{{sessionVar code=country}}/?lang={{sessionVar code=lang}}">here</a>
+
+```xml
 <frontend>
 	<aoe_sessionvars>
+		<country>
+			<getParameterName>country</getParameterName>
+			<cookieName />
+			<validate><![CDATA[/^[A-Za-z]{2}$/]]></validate>
+			<scope />
+			<defaultValue>en</defaultValue>
+		</country>
 		<lang>
 			<getParameterName>lang</getParameterName>
 			<cookieName />
-			<validate />
+			<validate><![CDATA[/^([A-Za-z]{2})-([A-Za-z]{2})$/]]></validate>
 			<scope />
+			<defaultValue>en-us</defaultValue>
 		</lang>
 	</aoe_sessionvars>
 </frontend>
+```
