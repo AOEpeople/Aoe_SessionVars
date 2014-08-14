@@ -31,12 +31,14 @@
         </events>
         <aoe_sessionvars>
             <vars>
-                <var1><!-- this is the internal name of the variable that's used to store/access the value from the core/customer/checkout session -->
-                    <getParameterName /><!-- if empty this parameter can't be captured by url -->
-                    <cookieName /><!-- if empty this parameter can't be captured by cookie -->
+                <!-- Example:
+                <var1> this is the internal name of the variable that's used to store/access the value from the core/customer/checkout session
+                    <getParameterName /> if empty this parameter can't be captured by url
+                    <cookieName /> if empty this parameter can't be captured by cookie
                     <validate />
-                    <scope /><!-- if empty core will be used -->
+                    <scope /> 'customer' or 'core', defaults to 'core'
                 </var1>
+                -->
             </vars>
         </aoe_sessionvars>
     </frontend>
