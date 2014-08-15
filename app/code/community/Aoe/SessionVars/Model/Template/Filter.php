@@ -1,7 +1,6 @@
 <?php
 class Aoe_SessionVars_Model_Template_Filter extends Mage_Widget_Model_Template_Filter
 {
-
     /**
      * Session Variable directive
      *
@@ -19,10 +18,6 @@ class Aoe_SessionVars_Model_Template_Filter extends Mage_Widget_Model_Template_F
                 $scope = (string)$config->scope;
                 $scope = ($scope != '') ? $scope : 'core';
                 $sessionVarValue = Mage::getSingleton($scope.'/session', array('name'=>'frontend'))->getData($params['code']);
-                if (empty($sessionVarValue)) {
-                    $defaultValue = (string)$config->defaultValue;
-                    $sessionVarValue = $defaultValue;
-                }
             }
         }
         return $sessionVarValue;

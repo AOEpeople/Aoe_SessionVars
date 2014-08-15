@@ -19,7 +19,7 @@
     </global>
     <frontend>
         <events>
-            <controller_front_send_response_before>
+            <controller_action_predispatch>
                 <observers>
                     <capture_sessionvars>
                         <class>aoe_sessionvars/observer</class>
@@ -27,7 +27,7 @@
                         <type>singleton</type>
                     </capture_sessionvars>
                 </observers>
-            </controller_front_send_response_before>
+            </controller_action_predispatch>
         </events>
         <aoe_sessionvars>
             <vars>
