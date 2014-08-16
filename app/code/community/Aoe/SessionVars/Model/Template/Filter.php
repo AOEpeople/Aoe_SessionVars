@@ -19,6 +19,10 @@ class Aoe_SessionVars_Model_Template_Filter extends Mage_Widget_Model_Template_F
                 $scope = ($scope != '') ? $scope : 'core';
                 $sessionVarValue = Mage::getSingleton($scope.'/session', array('name'=>'frontend'))->getData($params['code']);
             }
+            if (empty($sessionVarValue)) {
+                $defaultValue = (string)$config->defaultValue;
+                $sessionVarValue = $defaultValue;
+            }
         }
         return $sessionVarValue;
     }

@@ -27,15 +27,15 @@ class Aoe_SessionVars_Model_Observer extends Mage_Core_Model_Abstract
                 $cookieName = isset($params['cookieName']) ? $params['cookieName'] : false;
                 $regExp = isset($params['validate']) ? $params['validate'] : false;
                 $scope = (isset($params['scope']) && ($params['scope'] != '')) ? $params['scope'] : 'core';
-                $defaultValue = isset($params['defaultValue']) ? $params['defaultValue'] : false;
 
                 $data = '';
 
                 if ($paramName) {
-                    $data = Mage::app()->getRequest()->getParam($paramName, $defaultValue);
+                    $data = Mage::app()->getRequest()->getParam($paramName, '');
                 } elseif ($cookieName) {
-                    $data = Mage::app()->getRequest()->getCookie($cookieName, $defaultValue);
-                    Mage::getModel('core/cookie')->delete($cookieName);
+                    $cookieModel = Mage::getModel('core/cookie'); /* @var $cookieModel Mage_Core_Model_Cookie */
+                    $data = $cookieModel->get($cookieName);
+                    $cookieModel->delete($cookieName);
                 }
 
                 if ($data) {
