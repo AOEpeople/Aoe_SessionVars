@@ -20,7 +20,7 @@ class Aoe_SessionVars_Model_Observer extends Mage_Core_Model_Abstract
     {
         $sessionVars = Mage::getConfig()->getNode(self::SESSION_VARS_PATH)->asArray();
 
-        if (count($sessionVars)) {
+        if (is_array($sessionVars)) {
             foreach ($sessionVars as $var=>$params) {
 
                 $paramName = isset($params['getParameterName']) ? $params['getParameterName'] : false;
