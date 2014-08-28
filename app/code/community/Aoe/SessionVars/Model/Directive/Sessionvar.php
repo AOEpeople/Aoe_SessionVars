@@ -1,16 +1,20 @@
 <?php
-class Aoe_SessionVars_Model_Template_Filter extends Mage_Widget_Model_Template_Filter
+
+class Aoe_SessionVars_Model_Directive_Sessionvar implements Aoe_ExtendedFilter_Model_Directive_Interface
 {
     /**
-     * Session Variable directive
+     * @param Aoe_ExtendedFilter_Model_Interface $filter
+     * @param array $params
      *
-     * @param array $construction
-     * @return string
+     * @return mixed
      */
-    public function sessionvarDirective($construction)
+    public function process(Aoe_ExtendedFilter_Model_Interface $filter, array $params)
     {
+
+        // Re-parse the third parameter with the tokenizer and discard original parameters
+        $params = $filter->getIncludeParameters($params[2]);
+
         $sessionVarValue = '';
-        $params = $this->_getIncludeParameters($construction[2]);
 
         if (isset($params['code'])) {
             $config = Mage::getConfig()->getNode('frontend/aoe_sessionvars/vars/'.$params['code']);

@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Aoe_SessionVars>
-            <version>0.1.0</version>
+            <version>0.2.0</version>
         </Aoe_SessionVars>
     </modules>
     <global>
@@ -10,11 +10,6 @@
             <aoe_sessionvars>
                 <class>Aoe_SessionVars_Model</class>
             </aoe_sessionvars>
-            <widget>
-                <rewrite>
-                    <template_filter>Aoe_SessionVars_Model_Template_Filter</template_filter>
-                </rewrite>
-            </widget>
         </models>
     </global>
     <frontend>
@@ -35,4 +30,12 @@
             </vars>
         </aoe_sessionvars>
     </frontend>
+
+    <global>
+        <filter>
+            <directives>
+                <sessionvar>aoe_sessionvars/directive_sessionvar</sessionvar>
+            </directives>
+        </filter>
+    </global>
 </config>
