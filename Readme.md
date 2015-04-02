@@ -3,7 +3,11 @@
 ## Description
 
 The purpose of this module is to provide a generic way to "capture" variables coming in from outside (via url parameter or cookie) and store them in the specified session, so it can be consumed by other modules from there
-Author: Manish Jain
+
+## Authors/Contributors
+
+- [Manish Jain](https://github.com/manish172)
+- [Fabrizio Branca](https://github.com/fbrnc)
 
 ## Usage
 

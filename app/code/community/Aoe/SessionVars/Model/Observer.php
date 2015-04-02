@@ -1,6 +1,6 @@
 <?php
 /**
- * Auto apply coupon Model
+ * Store incoming vars
  *
  * @category    Aoe
  * @package     Aoe_SessionVars
@@ -21,28 +21,30 @@ class Aoe_SessionVars_Model_Observer extends Mage_Core_Model_Abstract
         $sessionVars = Mage::getConfig()->getNode(self::SESSION_VARS_PATH)->asArray();
 
         if (is_array($sessionVars)) {
-            foreach ($sessionVars as $var=>$params) {
+            foreach ($sessionVars as $code => $params) {
 
                 $paramName = isset($params['getParameterName']) ? $params['getParameterName'] : false;
                 $cookieName = isset($params['cookieName']) ? $params['cookieName'] : false;
                 $regExp = isset($params['validate']) ? $params['validate'] : false;
                 $scope = (isset($params['scope']) && ($params['scope'] != '')) ? $params['scope'] : 'core';
 
-                $data = '';
+                $value = '';
 
                 if ($paramName) {
-                    $data = Mage::app()->getRequest()->getParam($paramName, '');
+                    $value = Mage::app()->getRequest()->getParam($paramName, '');
                 } elseif ($cookieName) {
                     $cookieModel = Mage::getModel('core/cookie'); /* @var $cookieModel Mage_Core_Model_Cookie */
-                    $data = $cookieModel->get($cookieName);
+                    $value = $cookieModel->get($cookieName);
                     $cookieModel->delete($cookieName);
                 }
 
-                if ($data) {
-                    if ($regExp && !preg_match($regExp, $data)) {
+                if ($value) {
+                    if ($regExp && !preg_match($regExp, $value)) {
                         continue;
                     }
-                    Mage::getSingleton($scope.'/session', array('name'=>'frontend'))->setData($var, $data);
+                    Mage::getSingleton($scope.'/session', array('name'=>'frontend'))->setData($code, $value);
+                    Mage::dispatchEvent('aoe_sessionvars_store', array('code' => $code, 'value' => $value));
+                    Mage::dispatchEvent('aoe_sessionvars_store_'.$code, array('code' => $code, 'value' => $value));
                 }
 
             }

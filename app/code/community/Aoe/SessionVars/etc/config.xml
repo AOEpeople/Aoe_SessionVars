@@ -2,10 +2,15 @@
 <config>
     <modules>
         <Aoe_SessionVars>
-            <version>0.2.1</version>
+            <version>0.3.0</version>
         </Aoe_SessionVars>
     </modules>
     <global>
+        <helpers>
+            <aoe_sessionvars>
+                <class>Aoe_SessionVars_Helper</class>
+            </aoe_sessionvars>
+        </helpers>
         <models>
             <aoe_sessionvars>
                 <class>Aoe_SessionVars_Model</class>
