@@ -8,7 +8,6 @@
  */
 class Aoe_SessionVars_Model_Observer extends Mage_Core_Model_Abstract
 {
-    const SESSION_VARS_PATH = 'frontend/aoe_sessionvars/vars';
 
     /**
      * Set session/cookie variables
@@ -18,36 +17,34 @@ class Aoe_SessionVars_Model_Observer extends Mage_Core_Model_Abstract
      */
     public function setSessionVars(Varien_Event_Observer $observer)
     {
-        $sessionVars = Mage::getConfig()->getNode(self::SESSION_VARS_PATH)->asArray();
+        $sessionVars = Mage::helper('aoe_sessionvars')->getSessionVarConfiguration();
 
-        if (is_array($sessionVars)) {
-            foreach ($sessionVars as $code => $params) {
+        foreach ($sessionVars as $code => $params) {
 
-                $paramName = isset($params['getParameterName']) ? $params['getParameterName'] : false;
-                $cookieName = isset($params['cookieName']) ? $params['cookieName'] : false;
-                $regExp = isset($params['validate']) ? $params['validate'] : false;
-                $scope = (isset($params['scope']) && ($params['scope'] != '')) ? $params['scope'] : 'core';
+            $paramName = isset($params['getParameterName']) ? $params['getParameterName'] : false;
+            $cookieName = isset($params['cookieName']) ? $params['cookieName'] : false;
+            $regExp = isset($params['validate']) ? $params['validate'] : false;
+            $scope = (isset($params['scope']) && ($params['scope'] != '')) ? $params['scope'] : 'core';
 
-                $value = '';
+            $value = '';
 
-                if ($paramName) {
-                    $value = Mage::app()->getRequest()->getParam($paramName, '');
-                } elseif ($cookieName) {
-                    $cookieModel = Mage::getModel('core/cookie'); /* @var $cookieModel Mage_Core_Model_Cookie */
-                    $value = $cookieModel->get($cookieName);
-                    $cookieModel->delete($cookieName);
-                }
-
-                if ($value) {
-                    if ($regExp && !preg_match($regExp, $value)) {
-                        continue;
-                    }
-                    Mage::getSingleton($scope.'/session', array('name'=>'frontend'))->setData($code, $value);
-                    Mage::dispatchEvent('aoe_sessionvars_store', array('code' => $code, 'value' => $value));
-                    Mage::dispatchEvent('aoe_sessionvars_store_'.$code, array('code' => $code, 'value' => $value));
-                }
-
+            if ($paramName) {
+                $value = Mage::app()->getRequest()->getParam($paramName, '');
+            } elseif ($cookieName) {
+                $cookieModel = Mage::getModel('core/cookie'); /* @var $cookieModel Mage_Core_Model_Cookie */
+                $value = $cookieModel->get($cookieName);
+                $cookieModel->delete($cookieName);
             }
+
+            if ($value) {
+                if ($regExp && !preg_match($regExp, $value)) {
+                    continue;
+                }
+                Mage::getSingleton($scope.'/session', array('name'=>'frontend'))->setData($code, $value);
+                Mage::dispatchEvent('aoe_sessionvars_store', array('code' => $code, 'value' => $value));
+                Mage::dispatchEvent('aoe_sessionvars_store_'.$code, array('code' => $code, 'value' => $value));
+            }
+
         }
         return $this;
     }
