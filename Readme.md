@@ -26,6 +26,7 @@ Add the variables in your module's config.xml which needs to be set in session
 				<validate /> <!-- Regular expression to validate the value of parameter -->
 				<scope /><!-- if empty core will be used -->
 				<defaultValue /><!-- fallback if parameter wasn't captured before -->
+				<defaultValue_STOREID /><!-- fallback if parameter wasn't captured before. Replace the storeId with actual STORE ID -->
 			</var1>
 		</vars>
 	</aoe_sessionvars>
@@ -68,6 +69,7 @@ CMS content: Click <a href="http://www.domain.com/{{sessionVar code=country}}/?l
 			<validate><![CDATA[/^[A-Za-z]{2}$/]]></validate>
 			<scope />
 			<defaultValue>en</defaultValue>
+			<defaultValue_1>en-us</defaultValue_1>
 		</country>
 		<lang>
 			<getParameterName>lang</getParameterName>

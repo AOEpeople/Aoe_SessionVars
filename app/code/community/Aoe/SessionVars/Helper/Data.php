@@ -25,6 +25,11 @@ class Aoe_SessionVars_Helper_Data extends Mage_Core_Helper_Abstract
             $scope = ($scope != '') ? $scope : 'core';
             $sessionVarValue = Mage::getSingleton($scope.'/session', array('name'=>'frontend'))->getData($code);
         }
+        //Added support for default value for store
+        $storeValue = 'defaultValue_'.Mage::app()->getStore()->getStoreId();
+        if (empty($sessionVarValue) && $config->$storeValue) {
+            $sessionVarValue = $config->$storeValue;
+        }
         return !empty($sessionVarValue) ? $sessionVarValue : (string)$config->defaultValue;
     }
 
