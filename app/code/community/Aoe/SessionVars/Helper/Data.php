@@ -28,9 +28,12 @@ class Aoe_SessionVars_Helper_Data extends Mage_Core_Helper_Abstract
         //Added support for default value for store
         $storeValue = 'defaultValue_'.Mage::app()->getStore()->getStoreId();
         if (empty($sessionVarValue) && $config->$storeValue) {
-            $sessionVarValue = $config->$storeValue;
+            $sessionVarValue = (string)$config->$storeValue;
         }
-        return !empty($sessionVarValue) ? $sessionVarValue : (string)$config->defaultValue;
+        if (empty($sessionVarValue) && $config->defaultValue) {
+            $sessionVarValue = (string)$config->defaultValue;
+        }
+        return $sessionVarValue;
     }
 
     /**
