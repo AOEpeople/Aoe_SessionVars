@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Aoe_SessionVars>
-            <version>0.3.1</version>
+            <version>0.3.2</version>
         </Aoe_SessionVars>
     </modules>
     <global>
