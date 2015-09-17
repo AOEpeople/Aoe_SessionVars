@@ -44,13 +44,24 @@ class Aoe_SessionVars_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getCacheKey()
     {
-        $cacheKey = array();
-        foreach ($this->getSessionVarConfiguration() as $code => $params) {
-            $cacheKey[] = $code;
-            $cacheKey[] = $this->getSessionVar($code);
-        }
-        return md5(implode('|', $cacheKey));
+        return md5(implode('|', $this->getCacheKeyInfo()));
     }
+
+    /**
+     * This will return an array all available session vars and their values
+     * intended to be used as addition to a block cache key in case the block is consuming any session vars inside
+     *
+     * @return array
+     */
+    public function getCacheKeyInfo()
+    {
+        $info = array();
+        foreach ($this->getSessionVarConfiguration() as $code => $params) {
+            $info[] = $code . '_' . $this->getSessionVar($code);
+        }
+        return $info;
+    }
+
 
     /**
      * Get session var configuration
